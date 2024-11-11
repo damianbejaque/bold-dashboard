@@ -4,10 +4,11 @@ import {
   formatDateTime,
   transactionStatus,
 } from "../../utils/utils";
-import { AiOutlineLink, AiFillCloseCircle } from "react-icons/ai";
+import { AiFillCloseCircle } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 
 import PaymentMethod from "./PaymentMethod";
+import { PiContactlessPaymentLight, PiLink } from "react-icons/pi";
 
 interface TransactionCardProps {
   data: myBussiness;
@@ -20,6 +21,7 @@ const TransactionCard = ({ data }: TransactionCardProps) => {
     id,
     amount,
     deduction,
+    salesType,
     paymentMethod,
     franchise,
     transactionReference,
@@ -78,8 +80,13 @@ const TransactionCard = ({ data }: TransactionCardProps) => {
           <div className="flex justify-between">
             <p className="text-gris-oscuro">Tipo de pago</p>
             <p className="text-gris-oscuro font-bold flex items-center space-x-1">
-              <AiOutlineLink />
-              <span>Link de pagos</span>
+              <span className="flex gap-1 items-center">
+                {salesType === "PAYMENT_LINK" && <PiLink size={20} />}
+                {salesType === "TERMINAL" && (
+                  <PiContactlessPaymentLight size={20} />
+                )}
+                {salesType === "TERMINAL" ? "Datafono" : "Link de Pagos"}
+              </span>
             </p>
           </div>
         )}
