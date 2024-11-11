@@ -23,7 +23,7 @@ export function formatAmount(amount: number) {
   return `$ ${new Intl.NumberFormat('es-MX').format(amount)}`;
 }
 
-export function currentMont() {
+export function currentMonth() {
   const currentDate = new Date();
   return currentDate
     .toLocaleString("es-CO", {
@@ -58,7 +58,7 @@ export const calculateStartDate = (filterDate: string): Date => {
     startDate.setHours(0, 0, 0, 0);
   } else if (filterDate === "esta semana") {
     startDate.setDate(today.getDate() - 7);
-  } else if (filterDate === currentMont()) {
+  } else if (filterDate === currentMonth()) {
     startDate = new Date(today.getFullYear(), today.getMonth(), 1);
   }
 
@@ -100,6 +100,6 @@ export const getFooterDate = (title: string): string => {
     lastWeek.setDate(today.getDate() - 7);
     return `${lastWeek.toLocaleDateString()} - ${today.toLocaleDateString()}`;
   } else {
-    return `${currentMont()}, ${today.getFullYear()}`;
+    return `${currentMonth()}, ${today.getFullYear()}`;
   }
 };

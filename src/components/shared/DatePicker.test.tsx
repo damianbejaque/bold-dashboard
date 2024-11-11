@@ -10,7 +10,7 @@ describe("DatePicker component", () => {
   const activeTitle = "hoy";
 
   beforeEach(() => {
-    vi.spyOn(utils, "currentMont").mockReturnValue("Octubre");
+    vi.spyOn(utils, "currentMonth").mockReturnValue("Octubre");
     render(
       <DatePicker
         handleToday={handleToday}

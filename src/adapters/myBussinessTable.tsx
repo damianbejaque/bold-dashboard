@@ -1,55 +1,8 @@
-import React from "react";
-import {
-  adaptedMyBussinessTable,
-  myBussiness,
-  Status,
-} from "../types/myBussiness";
-import {
-  formatAmount,
-  formatDateTime,
-  transactionStatus,
-} from "../utils/utils";
-import { PiLink, PiContactlessPaymentLight } from "react-icons/pi";
+import { adaptedMyBussinessTable, myBussiness } from "../types/myBussiness";
+import { formatDateTime } from "../utils/utils";
 import PaymentMethod from "../components/shared/PaymentMethod";
-
-interface TransactionTdProps {
-  status: Status;
-  salesType: string;
-}
-
-const TransactionTd = ({
-  status,
-  salesType,
-}: TransactionTdProps): React.ReactNode => {
-  return (
-    <div className="flex items-center gap-2 text-azul">
-      {salesType === "PAYMENT_LINK" && <PiLink className="basis-1/12" />}
-      {salesType === "TERMINAL" && (
-        <PiContactlessPaymentLight className="basis-1/12" />
-      )}
-      <p className="basis-1/2 grow">{transactionStatus(status)} </p>
-    </div>
-  );
-};
-
-interface AmountTdProps {
-  amount: number;
-  deduction: number;
-}
-
-const AmmountTd = ({ amount, deduction }: AmountTdProps): React.ReactNode => {
-  return (
-    <div className="flex flex-col text-azul justify-self-start">
-      {formatAmount(amount)}
-      {deduction > 0 && (
-        <>
-          <p className="text-gris-oscuro">Deduccion Bold </p>
-          <p className="text-rojo">{formatAmount(deduction)} </p>{" "}
-        </>
-      )}
-    </div>
-  );
-};
+import TransactionTd from "../components/shared/Table/TransactionTd";
+import AmmountTd from "../components/shared/Table/AmmountTd";
 
 export const myBussinessDataTable = (
   data: myBussiness[]
@@ -67,7 +20,7 @@ export const myBussinessDataTable = (
       />
     ),
     "ID transaccion Bold": item.id,
-    Monto: <AmmountTd amount={item.amount} deduction={item.deduction} />,
+    Monto: <AmmountTd amount={item.amount} deduction={item.deduction || 0} />,
     amount: item.amount,
     id: item.id,
   }));

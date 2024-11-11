@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { currentMont } from "../../utils/utils";
+import { currentMonth } from "../../utils/utils";
 
 interface DatePickerProps {
   handleToday: () => void;
@@ -14,7 +14,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   handleMonth,
   activeTitle,
 }) => {
-  const currentMonth = currentMont();
+  const currentMonthVariable = currentMonth();
   const [activeTab, setActiveTab] = useState(activeTitle);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
     <div className="flex justify-center items-center bg-gray-50 align-baseline p-2 rounded-lg shadow-sm mb-4">
       {renderButton("hoy", handleToday)}
       {renderButton("esta semana", handleWeek)}
-      {renderButton(currentMonth, handleMonth)}
+      {renderButton(currentMonthVariable, handleMonth)}
     </div>
   );
 };

@@ -14,8 +14,8 @@ export interface myBussiness {
     createdAt: number
     transactionReference: number
     amount: number
-    deduction: number
-    franchise: string
+    deduction?: number
+    franchise?: string
 }
 
 export interface adaptedMyBussinessTable {

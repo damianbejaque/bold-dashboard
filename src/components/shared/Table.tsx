@@ -26,6 +26,42 @@ const Table = <
     (column) => !hiddenColumns.includes(column)
   );
 
+  const renderTableHeader = () => (
+    <thead>
+      <tr className="border-y-2 border-solid border-y-gris-claro">
+        {visibleColumns.map((column) => (
+          <th className="p-3 font-normal text-gris-oscuro" key={column}>
+            {column}
+          </th>
+        ))}
+      </tr>
+    </thead>
+  );
+
+  const renderTableBody = () => (
+    <tbody>
+      {data.length === 0 && <div>No data available</div>}
+      {data.map((row, index) => (
+        <tr
+          key={row.id}
+          className={`border-b-[1px] border-solid border-gris-oscuro hover:bg-gray-50 border-l-2 ${
+            index % 2 === 0 ? " border-l-azul" : "border-l-gris-oscuro"
+          }`}
+        >
+          {visibleColumns.map((column) => (
+            <td
+              key={column}
+              className="p-4 text-gris-oscuro"
+              onClick={rowClick ? () => rowClick(row) : undefined}
+            >
+              {row[column]}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  );
+
   return (
     <section className=" flex flex-col bg-white rounded-xl shadow-lg overflow-hidden">
       <div className="text-white p-4 rounded-t-xl bg-header align-baseline">
@@ -37,36 +73,8 @@ const Table = <
       )}
       <div className="overflow-x-auto">
         <table className="min-w-full text-left">
-          <thead>
-            <tr className="border-y-2 border-solid border-y-gris-claro">
-              {visibleColumns.map((column) => (
-                <th className="p-3 font-normal text-gris-oscuro" key={column}>
-                  {column}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {data.length === 0 && <div>No data available</div>}
-            {data.map((row, index) => (
-              <tr
-                key={row.id}
-                className={`border-b-[1px] border-solid border-gris-oscuro hover:bg-gray-50 border-l-2 ${
-                  index % 2 === 0 ? " border-l-azul" : "border-l-gris-oscuro"
-                }`}
-              >
-                {visibleColumns.map((column) => (
-                  <td
-                    key={column}
-                    className="p-4 text-gris-oscuro"
-                    onClick={rowClick ? () => rowClick(row) : undefined}
-                  >
-                    {row[column]}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
+          {renderTableHeader()}
+          {renderTableBody()}
         </table>
       </div>
     </section>
