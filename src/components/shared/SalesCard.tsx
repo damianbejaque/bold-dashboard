@@ -1,4 +1,4 @@
-import { currentMont, formatAmount, formatDate } from "../../utils/utils";
+import { formatAmount, getFooterDate } from "../../utils/utils";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 
 interface TotalSalesProps {
@@ -7,20 +7,10 @@ interface TotalSalesProps {
 }
 
 const SalesCard = ({ title, total }: TotalSalesProps) => {
-  const today = new Date();
-  let footerDate = "";
-  if (title === "hoy") {
-    footerDate = formatDate(Date.now());
-  } else if (title === "esta semana") {
-    const lastWeek = new Date(today);
-    lastWeek.setDate(today.getDate() - 7);
-    footerDate = `${lastWeek.toLocaleDateString()} - ${today.toLocaleDateString()}`;
-  } else {
-    footerDate = `${currentMont()}, ${today.getFullYear()}`;
-  }
+  const footerDate = getFooterDate(title);
   return (
     <aside className="flex-grow-[1] bg-white rounded-xl shadow-lg">
-      <div className=" flex text-gris-claro p-4 rounded-t-xl justify-between bg-header items-center ">
+      <div className="flex text-gris-claro p-4 rounded-t-xl justify-between bg-header items-center">
         <h2 className="text-sm font-light">Total de ventas de {title}</h2>
         <div className="relative group">
           <IoIosInformationCircleOutline className="text-2xl text-white" />
@@ -29,7 +19,7 @@ const SalesCard = ({ title, total }: TotalSalesProps) => {
           </div>
         </div>
       </div>
-      <div className="p-4 ">
+      <div className="p-4">
         <h2 className="text-2xl font-bold text-header">
           {formatAmount(total)}
         </h2>

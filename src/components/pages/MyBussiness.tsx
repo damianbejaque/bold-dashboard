@@ -20,11 +20,11 @@ import {
 } from "../shared/";
 
 import Modal from "../shared/Modal";
-import { FilterOptions } from "../shared/Filters";
+import { FilterOption } from "../shared/Filters";
 
 const hiddenColumns = ["id", "amount"];
 
-const optionsFilterCheckbox: FilterOptions[] = [
+const optionsFilterCheckbox: FilterOption[] = [
   {
     name: "Cobro con datafono",
     searchValue: "TERMINAL",

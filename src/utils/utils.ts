@@ -90,3 +90,16 @@ export const filterByTextInput = (data: myBussiness[], filterTextInput: string):
     )
   );
 };
+
+export const getFooterDate = (title: string): string => {
+  const today = new Date();
+  if (title === "hoy") {
+    return formatDate(Date.now());
+  } else if (title === "esta semana") {
+    const lastWeek = new Date(today);
+    lastWeek.setDate(today.getDate() - 7);
+    return `${lastWeek.toLocaleDateString()} - ${today.toLocaleDateString()}`;
+  } else {
+    return `${currentMont()}, ${today.getFullYear()}`;
+  }
+};

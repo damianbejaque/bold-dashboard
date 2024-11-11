@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaFilter, FaRegWindowClose } from "react-icons/fa";
 
-export interface FilterOptions {
+export interface FilterOption {
   name: string;
   active: boolean;
   searchValue?: string;
@@ -9,7 +9,7 @@ export interface FilterOptions {
 }
 
 interface FilterModalProps {
-  options: FilterOptions[];
+  options: FilterOption[];
   handleApplyFilter: () => void;
 }
 
@@ -17,6 +17,20 @@ const FilterModal = ({ options, handleApplyFilter }: FilterModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = () => setIsOpen(!isOpen);
+
+  const renderFilterOption = (filter: FilterOption) => (
+    <div key={filter.name} className="flex items-center space-x-2">
+      <label className="flex items-center space-x-2 text-gray-700">
+        <input
+          type="checkbox"
+          checked={filter.active}
+          className="form-checkbox"
+          onChange={filter.handleClick}
+        />
+        <span>{filter.name}</span>
+      </label>
+    </div>
+  );
 
   return (
     <div className="relative inline-block self-end">
@@ -39,25 +53,7 @@ const FilterModal = ({ options, handleApplyFilter }: FilterModalProps) => {
               <FaRegWindowClose />
             </button>
           </div>
-
-          <div className="space-y-2">
-            {options.map((filter) => {
-              return (
-                <div key={filter.name} className="flex items-center space-x-2">
-                  <label className="flex items-center space-x-2 text-gray-700">
-                    <input
-                      type="checkbox"
-                      checked={filter.active}
-                      className="form-checkbox"
-                      onChange={filter.handleClick}
-                    />
-                    <span>{filter.name}</span>
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-
+          <div className="space-y-2">{options.map(renderFilterOption)}</div>
           <button
             onClick={handleApplyFilter}
             className="w-full bg-pink-300 text-white py-2 rounded-lg font-medium hover:bg-pink-400"

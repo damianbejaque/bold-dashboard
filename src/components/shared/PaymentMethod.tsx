@@ -1,20 +1,34 @@
-import { FaCcMastercard, FaCcVisa } from "react-icons/fa";
-import pse from "src/assets/pse.png";
+import React from "react";
 import daviplata from "src/assets/daviplata.png";
-import nequi from "src/assets/nequi.png";
 import bancolombia from "src/assets/bancolombia.jpg";
+import pse from "src/assets/pse.png";
+import nequi from "src/assets/nequi.png";
+import { FaCcMastercard, FaCcVisa } from "react-icons/fa";
 
 interface PaymentMethodProps {
   paymentMethod: string;
-  franchise: string;
-  transactionReference: number;
+  franchise?: string;
+  transactionReference: string;
 }
 
-const PaymentMethod = ({
+const PaymentMethod: React.FC<PaymentMethodProps> = ({
   paymentMethod,
-  franchise,
-  transactionReference = 0,
-}: PaymentMethodProps) => {
+  franchise = "",
+  transactionReference,
+}) => {
+  const renderPaymentInfo = (
+    logoSrc: string | null,
+    reference: string,
+    label: string | null = null
+  ) => (
+    <>
+      {logoSrc && <img src={logoSrc} className="h-6 w-6" alt="Logo" />}
+      <span className="text-gris-oscuro grow">
+        {label ? label : `**** ${reference}`}
+      </span>
+    </>
+  );
+
   const paymentReturn = () => {
     switch (paymentMethod) {
       case "CARD":
@@ -28,50 +42,23 @@ const PaymentMethod = ({
           </>
         );
       case "PSE":
-        return (
-          <>
-            <img src={pse} className="h-6 w-6 " alt="Logo" />
-            <span className="text-gris-oscuro grow">PSE</span>
-          </>
-        );
+        return renderPaymentInfo(pse, transactionReference, "PSE");
       case "NEQUI":
-        return (
-          <>
-            <img src={nequi} className="h-6 w-6 " alt="Logo" />
-            <span className="text-gris-oscuro grow">
-              **** {transactionReference}
-            </span>
-          </>
-        );
+        return renderPaymentInfo(nequi, transactionReference);
       case "DAVIPLATA":
-        return (
-          <>
-            <img src={daviplata} className="h-6 w-6 " alt="Logo" />
-            <span className="text-gris-oscuro grow">
-              **** {transactionReference}
-            </span>
-          </>
-        );
+        return renderPaymentInfo(daviplata, transactionReference);
       case "BANCOLOMBIA":
-        return (
-          <>
-            <img src={bancolombia} className="h-6 w-6 " alt="Logo" />
-            <span className="text-gris-oscuro grow">
-              **** {transactionReference}
-            </span>
-          </>
-        );
+        return renderPaymentInfo(bancolombia, transactionReference);
       default:
-        return (
-          <>
-            <span className="text-gris-oscuro grow">
-              {paymentMethod} {transactionReference}
-            </span>
-          </>
+        return renderPaymentInfo(
+          null,
+          transactionReference,
+          `${paymentMethod} ${transactionReference}`
         );
     }
   };
 
   return <div className="inline-flex gap-4 grow">{paymentReturn()}</div>;
 };
+
 export default PaymentMethod;
