@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 interface Data<U> {
   url: string;
-  transformation: (data) => U[];
+  transformation: (data: unknown) => U[];
 }
 
 interface UseData<T> {
