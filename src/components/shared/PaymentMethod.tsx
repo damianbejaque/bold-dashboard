@@ -8,7 +8,7 @@ import { FaCcMastercard, FaCcVisa } from "react-icons/fa";
 interface PaymentMethodProps {
   paymentMethod: string;
   franchise?: string;
-  transactionReference: string;
+  transactionReference: number;
 }
 
 const PaymentMethod: React.FC<PaymentMethodProps> = ({
@@ -18,7 +18,7 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({
 }) => {
   const renderPaymentInfo = (
     logoSrc: string | null,
-    reference: string,
+    reference: number,
     label: string | null = null
   ) => (
     <>

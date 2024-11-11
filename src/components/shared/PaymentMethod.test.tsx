@@ -7,7 +7,7 @@ import pse from "src/assets/pse.png";
 import nequi from "src/assets/nequi.png";
 
 describe("PaymentMethod component", () => {
-  const transactionReference = "1234";
+  const transactionReference = 1234;
 
   it("renders DAVIPLATA payment method correctly", () => {
     render(
