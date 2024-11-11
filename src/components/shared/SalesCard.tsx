@@ -1,4 +1,5 @@
 import { currentMont, formatAmount, formatDate } from "../../utils/utils";
+import { IoIosInformationCircleOutline } from "react-icons/io";
 
 interface TotalSalesProps {
   title: string;
@@ -21,9 +22,12 @@ const SalesCard = ({ title, total }: TotalSalesProps) => {
     <aside className="flex-grow-[1] bg-white rounded-xl shadow-lg">
       <div className=" flex text-gris-claro p-4 rounded-t-xl justify-between bg-header items-center ">
         <h2 className="text-sm font-light">Total de ventas de {title}</h2>
-        <button className="border-[1px] border-solid  rounded-full p-1 w-4">
-          <i className="text-white text-xs">ℹ️</i>
-        </button>
+        <div className="relative group">
+          <IoIosInformationCircleOutline className="text-2xl text-white" />
+          <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gris-oscuro text-white text-xs rounded py-1 px-2">
+            Información adicional sobre las ventas
+          </div>
+        </div>
       </div>
       <div className="p-4 ">
         <h2 className="text-2xl font-bold text-header">

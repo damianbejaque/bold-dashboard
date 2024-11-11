@@ -173,8 +173,8 @@ const MyBussiness: React.FC = () => {
           {selectedRow && <TransactionCard data={selectedRow} />}
         </Modal>
       )}
-      <section className="flex text-gray-600 body-font mx-auto mb-2 gap-4">
-        <div className="basis-1/3">
+      <section className="columns-1 sm:columns-2 sm:flex text-gray-600 body-font mx-auto mb-2 gap-4">
+        <div className="basis-1/3 mb-3">
           <SalesCard title={filterDate} total={sumAllSales(tableData)} />
         </div>
         <div className="flex flex-col basis-1/2 flex-grow">
