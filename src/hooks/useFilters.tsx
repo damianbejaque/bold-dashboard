@@ -10,8 +10,18 @@ const useFilters = (data: myBussiness[], FILTER_CHECKBOXES) => {
   const [filterDate, setFilterDate] = useState(
     localStorage.getItem("localFilterDate") || ""
   );
-  const [filterCheckbox, setFilterCheckbox] = useState(FILTER_CHECKBOXES);
-  const [filterTextInput, setFilterTextInput] = useState("");
+  const [filterCheckbox, setFilterCheckbox] = useState(
+    JSON.parse(localStorage.getItem("localFilterCheckbox") || "null") ||
+      FILTER_CHECKBOXES
+  );
+  const [filterTextInput, setFilterTextInput] = useState(
+    localStorage.getItem("localFilterTextInput") || ""
+  );
+
+  const handleFilterText = (text: string) => {
+    setFilterTextInput(text);
+    localStorage.setItem("localFilterTextInput", text);
+  };
   const [filteredData, setFilteredData] = useState(data);
 
   const applyAllFilters = useCallback(() => {
@@ -39,7 +49,7 @@ const useFilters = (data: myBussiness[], FILTER_CHECKBOXES) => {
       } else {
         newFilter.find((item) => item.name === "Ver todos")!.active = false;
       }
-
+      localStorage.setItem("localFilterCheckbox", JSON.stringify(newFilter));
       return newFilter;
     });
   };
@@ -81,7 +91,7 @@ const useFilters = (data: myBussiness[], FILTER_CHECKBOXES) => {
     filterDate,
     filterCheckbox,
     filterTextInput,
-    setFilterTextInput,
+    handleFilterText,
     handleDateRange,
     handleApplyFilterCheckbox,
   };

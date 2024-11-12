@@ -40,7 +40,7 @@ const MyBussiness: React.FC = () => {
     filterDate,
     filterCheckbox,
     filterTextInput,
-    setFilterTextInput,
+    handleFilterText,
     handleDateRange,
     handleApplyFilterCheckbox,
   } = useFilters(myBussinessInitialData, FILTER_CHECKBOXES);
@@ -102,7 +102,7 @@ const MyBussiness: React.FC = () => {
           columns={columns}
           data={tableData}
           rowClick={handleClickRow}
-          handleSearchInput={setFilterTextInput}
+          handleSearchInput={handleFilterText}
           searchInput={filterTextInput}
           title={`Transacciones de ${filterDate}`}
           hiddenColumns={hiddenColumns}
