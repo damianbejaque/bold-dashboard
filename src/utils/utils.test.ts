@@ -1,4 +1,3 @@
-// utils.test.ts
 import {
     sumAllSales,
     formatDate,

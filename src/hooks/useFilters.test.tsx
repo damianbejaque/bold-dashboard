@@ -91,7 +91,6 @@ describe("useFilters Hook", () => {
       useFilters(mockData, FILTER_CHECKBOXES)
     );
 
-    // Toggle "Cobro con datafono"
     act(() => {
       result.current.filterCheckbox[0].handleClick();
     });

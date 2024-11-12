@@ -2,7 +2,6 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import useData from "./useData";
 
-// Mocking fetch globally
 const mockFetch = vi.fn();
 
 global.fetch = mockFetch;
@@ -19,7 +18,6 @@ const transformedData = [
   { id: 2, name: "Item B" },
 ];
 
-// Transformation function for testing
 const transformFunction = (data: { id: number; name: string }[]) => data;
 
 describe("useData hook", () => {
@@ -40,12 +38,10 @@ describe("useData hook", () => {
       })
     );
 
-    // Verify initial state
     expect(result.current.isLoading).toBe(true);
     expect(result.current.data).toEqual([]);
     expect(result.current.error).toBeNull();
 
-    // Wait for hook to process data
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
       expect(result.current.data).toEqual(transformedData);
@@ -63,12 +59,10 @@ describe("useData hook", () => {
       })
     );
 
-    // Verify initial state
     expect(result.current.isLoading).toBe(true);
     expect(result.current.data).toEqual([]);
     expect(result.current.error).toBeNull();
 
-    // Wait for hook to handle the error
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
       expect(result.current.data).toEqual([]);
@@ -91,12 +85,10 @@ describe("useData hook", () => {
       })
     );
 
-    // Verify initial state
     expect(result.current.isLoading).toBe(true);
     expect(result.current.data).toEqual([]);
     expect(result.current.error).toBeNull();
 
-    // Wait for hook to process the failed response
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
       expect(result.current.data).toEqual([]);
@@ -118,7 +110,6 @@ describe("useData hook", () => {
       })
     );
 
-    // Wait for hook to process the empty response
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
       expect(result.current.data).toEqual([]);
