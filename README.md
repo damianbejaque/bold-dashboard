@@ -30,3 +30,11 @@ To start the development server with hot module replacement:
 
 ```sh
 npm run dev
+
+
+###  Running the test
+
+To run all the test for the application 
+
+```sh
+npm test
