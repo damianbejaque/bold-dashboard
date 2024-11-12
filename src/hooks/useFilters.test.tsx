@@ -120,7 +120,7 @@ describe("useFilters Hook", () => {
     );
 
     act(() => {
-      result.current.setFilterTextInput("GNF0");
+      result.current.handleFilterText("GNF0");
     });
 
     act(() => {
