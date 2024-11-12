@@ -38,3 +38,7 @@ To run all the test for the application
 
 ```sh
 npm test
+
+### Additional Info
+
+This repository is set up for automatic deployment. Any push made to the `main` branch will trigger a deployment to [https://damianbejaque.github.io/bold-dashboard/](https://damianbejaque.github.io/bold-dashboard/).
