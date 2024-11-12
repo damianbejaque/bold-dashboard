@@ -60,6 +60,7 @@ const MyBussiness: React.FC = () => {
     () => myBussinessDataTable(filteredData),
     [filteredData]
   );
+  console.log("🚀 ~ tableData:", tableData);
 
   const columns = useMemo(
     () =>

@@ -13,12 +13,25 @@ import { Status } from '../types/myBussiness';
 
 describe('Utils Functions', () => {
     test('sumAllSales should return the sum of all amounts', () => {
-        const data = [
-            { amount: 100 },
-            { amount: 200 },
-            { amount: 300 },
-        ];
-        expect(sumAllSales(data)).toBe(600);
+        const data = [{
+            "Fecha y hora": "11/12/2024 2:08:51",
+            "ID transaccion Bold": "GZENWU61DONLZ",
+            "Metodo de pago": "<button class=\"btn btn-primary\" type=\"button\">Paypal</button>",
+            "Monto": "<button class=\"btn btn-primary\" type=\"button\">$9,995,766</button>",
+            "Transaccion": "<button class=\"btn btn-primary\" type=\"button\">Ver transaccion</button>",
+            "amount": 10,
+            "id": "GZENWU61DONLZ"
+        },
+        {
+            "Fecha y hora": "11/12/2024 2:08:51",
+            "ID transaccion Bold": "GZENWU61DONLZ",
+            "Metodo de pago": "<button class=\"btn btn-primary\" type=\"button\">Paypal</button>",
+            "Monto": "<button class=\"btn btn-primary\" type=\"button\">$9,995,766</button>",
+            "Transaccion": "<button class=\"btn btn-primary\" type=\"button\">Ver transaccion</button>",
+            "amount": 20,
+            "id": "GZENWU61DONLZ"
+        }];
+        expect(sumAllSales(data)).toBe(30);
     });
 
     test('formatDate should format the date correctly', () => {
