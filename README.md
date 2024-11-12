@@ -38,6 +38,8 @@ To run all the test for the application
 
 ```sh
 npm test
+```
+
 
 ### Additional Info
 
