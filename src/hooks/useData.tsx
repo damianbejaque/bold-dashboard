@@ -8,13 +8,13 @@ interface Data<U> {
 interface UseData<T> {
   data: T[];
   isLoading: boolean;
-  error: unknown;
+  error: Error | null;
 }
 
 const useData = <T,>({ url, transformation }: Data<T>): UseData<T> => {
   const [data, setData] = useState<T[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<unknown>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     fetch(url)

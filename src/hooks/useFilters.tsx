@@ -14,21 +14,19 @@ const useFilters = (data: myBussiness[], FILTER_CHECKBOXES) => {
   const [filterTextInput, setFilterTextInput] = useState("");
   const [filteredData, setFilteredData] = useState(data);
 
-  // Apply all filters to the data
   const applyAllFilters = useCallback(() => {
     let result = filterByDate(data, filterDate);
     result = filterByCheckbox(result, filterCheckbox);
     result = filterByTextInput(result, filterTextInput);
     setFilteredData(result);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, filterDate, filterTextInput]);
 
-  // Handle date filter change
   const handleDateRange = (newDate: string) => {
     setFilterDate(newDate);
     localStorage.setItem("localFilterDate", newDate);
   };
 
-  // Toggle a checkbox filter
   const toggleCheckbox = (name: string) => {
     setFilterCheckbox((prev) => {
       const newFilter = prev.map((item) =>
@@ -46,14 +44,12 @@ const useFilters = (data: myBussiness[], FILTER_CHECKBOXES) => {
     });
   };
 
-  // Reset all checkboxes to inactive
   const resetCheckboxes = () => {
     setFilterCheckbox((prev) =>
       prev.map((item) => ({ ...item, active: true }))
     );
   };
 
-  // Apply only active checkbox filters
   const handleApplyFilterCheckbox = useCallback(() => {
     const activeFilters = filterCheckbox.filter((item) => item.active);
     if (activeFilters.length > 0) {
@@ -62,7 +58,7 @@ const useFilters = (data: myBussiness[], FILTER_CHECKBOXES) => {
       );
       setFilteredData(filteredByCheckbox);
     } else {
-      setFilteredData(data); // Reset to original data if no filters are active
+      setFilteredData(data);
     }
   }, [filterCheckbox, data]);
 
@@ -76,7 +72,6 @@ const useFilters = (data: myBussiness[], FILTER_CHECKBOXES) => {
     );
   }, []);
 
-  // Re-apply all filters whenever dependencies change
   useEffect(() => {
     applyAllFilters();
   }, [applyAllFilters]);

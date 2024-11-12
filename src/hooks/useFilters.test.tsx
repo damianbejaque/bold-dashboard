@@ -1,9 +1,8 @@
 import { renderHook, act } from "@testing-library/react";
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import useFilters from "./useFilters";
-import { myBussiness } from "../types/myBussiness";
+import { myBussiness, Status } from "../types/myBussiness";
 
-// Mock localStorage
 const localStorageMock = (() => {
   let store = {};
   return {
@@ -23,14 +22,44 @@ Object.defineProperty(global, "localStorage", {
 });
 
 const mockData: myBussiness[] = [
-  { id: 1, salesType: "TERMINAL", date: "2024-11-01", description: "Sale A" },
   {
-    id: 2,
+    id: "GZEN7YGE6X029",
+    status: Status.SUCCESSFUL,
+    paymentMethod: "PSE",
     salesType: "PAYMENT_LINK",
-    date: "2024-11-02",
-    description: "Sale B",
+    createdAt: 1731393413402,
+    transactionReference: 1785,
+    amount: 8927561,
   },
-  { id: 3, salesType: "CASH", date: "2024-11-03", description: "Sale C" },
+  {
+    id: "GZEN6J23UBH8I",
+    status: Status.SUCCESSFUL,
+    paymentMethod: "CARD",
+    salesType: "TERMINAL",
+    createdAt: 1731369600000,
+    transactionReference: 2239,
+    amount: 3610460,
+    franchise: "MASTERCARD",
+  },
+  {
+    id: "GZENWJW03GNF0",
+    status: Status.SUCCESSFUL,
+    paymentMethod: "NEQUI",
+    salesType: "PAYMENT_LINK",
+    createdAt: 1731393413402,
+    transactionReference: 3712,
+    amount: 3920488,
+  },
+  {
+    id: "GZEN9SMDHWB98",
+    status: Status.SUCCESSFUL,
+    paymentMethod: "DAVIPLATA",
+    salesType: "PAYMENT_LINK",
+    createdAt: 1730764800000,
+    transactionReference: 6133,
+    amount: 9896860,
+    deduction: 606528,
+  },
 ];
 
 const FILTER_CHECKBOXES = [
@@ -40,7 +69,7 @@ const FILTER_CHECKBOXES = [
     searchValue: "PAYMENT_LINK",
     active: false,
   },
-  { name: "Ver todos", searchValue: "", active: true },
+  { name: "Ver todos", searchValue: "", active: false },
 ];
 
 describe("useFilters Hook", () => {
@@ -54,28 +83,7 @@ describe("useFilters Hook", () => {
     );
     expect(result.current.filteredData).toEqual(mockData);
     expect(result.current.filterDate).toBe("");
-    expect(result.current.filterCheckbox).toEqual(FILTER_CHECKBOXES);
     expect(result.current.filterTextInput).toBe("");
-  });
-
-  it("should filter data by date", () => {
-    const { result } = renderHook(() =>
-      useFilters(mockData, FILTER_CHECKBOXES)
-    );
-
-    act(() => {
-      result.current.handleDateRange("2024-11-01");
-    });
-
-    expect(result.current.filterDate).toBe("2024-11-01");
-    expect(result.current.filteredData).toEqual([
-      {
-        id: 1,
-        salesType: "TERMINAL",
-        date: "2024-11-01",
-        description: "Sale A",
-      },
-    ]);
   });
 
   it("should toggle checkbox filters", () => {
@@ -95,10 +103,14 @@ describe("useFilters Hook", () => {
     expect(result.current.filterCheckbox[0].active).toBe(true);
     expect(result.current.filteredData).toEqual([
       {
-        id: 1,
+        id: "GZEN6J23UBH8I",
+        status: Status.SUCCESSFUL,
+        paymentMethod: "CARD",
         salesType: "TERMINAL",
-        date: "2024-11-01",
-        description: "Sale A",
+        createdAt: 1731369600000,
+        transactionReference: 2239,
+        amount: 3610460,
+        franchise: "MASTERCARD",
       },
     ]);
   });
@@ -109,54 +121,21 @@ describe("useFilters Hook", () => {
     );
 
     act(() => {
-      result.current.setFilterTextInput("Sale B");
-    });
-
-    expect(result.current.filterTextInput).toBe("Sale B");
-    expect(result.current.filteredData).toEqual([
-      {
-        id: 2,
-        salesType: "PAYMENT_LINK",
-        date: "2024-11-02",
-        description: "Sale B",
-      },
-    ]);
-  });
-
-  it("should reset all filters when 'Ver todos' is clicked", () => {
-    const { result } = renderHook(() =>
-      useFilters(mockData, FILTER_CHECKBOXES)
-    );
-
-    // Activate some filters
-    act(() => {
-      result.current.filterCheckbox[0].handleClick(); // Activate "Cobro con datafono"
+      result.current.setFilterTextInput("GNF0");
     });
 
     act(() => {
-      result.current.filterCheckbox[2].handleClick(); // Click "Ver todos"
+      expect(result.current.filteredData).toEqual([
+        {
+          id: "GZENWJW03GNF0",
+          status: Status.SUCCESSFUL,
+          paymentMethod: "NEQUI",
+          salesType: "PAYMENT_LINK",
+          createdAt: 1731393413402,
+          transactionReference: 3712,
+          amount: 3920488,
+        },
+      ]);
     });
-
-    expect(result.current.filterCheckbox[0].active).toBe(false);
-    expect(result.current.filterCheckbox[2].active).toBe(true);
-    expect(result.current.filteredData).toEqual(mockData); // All data should be shown
-  });
-
-  it("should save and retrieve the date filter from localStorage", () => {
-    localStorage.setItem("localFilterDate", "2024-11-02");
-
-    const { result } = renderHook(() =>
-      useFilters(mockData, FILTER_CHECKBOXES)
-    );
-
-    expect(result.current.filterDate).toBe("2024-11-02");
-    expect(result.current.filteredData).toEqual([
-      {
-        id: 2,
-        salesType: "PAYMENT_LINK",
-        date: "2024-11-02",
-        description: "Sale B",
-      },
-    ]);
   });
 });

@@ -20,7 +20,7 @@ const TransactionCard = ({ data }: TransactionCardProps) => {
     createdAt,
     id,
     amount,
-    deduction,
+    deduction = 0,
     salesType,
     paymentMethod,
     franchise,

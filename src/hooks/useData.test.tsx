@@ -20,7 +20,7 @@ const transformedData = [
 ];
 
 // Transformation function for testing
-const transformFunction = (data: any) => data;
+const transformFunction = (data: { id: number; name: string }[]) => data;
 
 describe("useData hook", () => {
   beforeEach(() => {
